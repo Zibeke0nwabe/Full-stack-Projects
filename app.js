@@ -5,8 +5,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const quizRoutes = require('./routes/quiz');
-const randomRoutes = require('./routes/random')
-const User = require('./models/User'); // Ensure this path is correct
+const randomRoutes = require('./routes/random');
+const videoRoutes = require('./routes/videos');
+const User = require('./models/User');
 
 const app = express();
 
@@ -29,6 +30,8 @@ app.use(authRoutes);
 app.use(quizRoutes);
 //Use the random routes
 app.use(randomRoutes);
+//Use the video routes
+app.use(videoRoutes);
 // Authentication middleware
 const isAuthenticated = (req, res, next) => {
   if (req.session.username) {
