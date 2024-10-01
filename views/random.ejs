@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shankura Random Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const balanceDisplay = document.getElementById('balance');
+            const form = document.getElementById('lottoForm');
+            const message = document.getElementById('message');
+
+            let balance = <%= balance %>;
+            const ticketPrice = 3.00;
+
+            function updateBalanceDisplay() {
+                balanceDisplay.textContent = `R${balance.toFixed(2)}`;
+            }
+            updateBalanceDisplay();
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (balance < ticketPrice) {
+                    message.textContent = "Insufficient funds. Please go watch ads or quiz to make  more money to play.";
+                    return;
+                }
+
+                const userNumbers = Array.from(document.querySelectorAll('.number-input')).map(input => parseInt(input.value));
+                if (new Set(userNumbers).size !== 5) {
+                    message.textContent = "Please enter 5 unique numbers.";
+                    return;
+                }
+
+                balance -= ticketPrice;
+                const winningNumbers = generateRandomNumbers();
+                const matches = getMatchingNumbers(userNumbers, winningNumbers);
+                const prize = calculatePrize(matches);
+                
+                if (prize > 0) {
+                    balance += prize; // Update balance if user won
+                }
+
+                updateBalanceInDatabase(prize - ticketPrice);
+                
+                updateBalanceDisplay();
+                message.textContent = `You matched ${matches.length} numbers. ${prize > 0 ? `You won R${prize}!` : "Better luck next time!"} Winning numbers: ${winningNumbers.join(', ')}`;
+            });
+
+            function generateRandomNumbers() {
+                let numbers = [];
+                while (numbers.length < 5) {
+                    let num = Math.floor(Math.random() * 59) + 1;
+                    if (!numbers.includes(num)) {
+                        numbers.push(num);
+                    }
+                }
+                return numbers;
+            }
+
+            function getMatchingNumbers(userNumbers, winningNumbers) {
+                return userNumbers.filter(num => winningNumbers.includes(num));
+            }
+
+            function calculatePrize(matches) {
+                let prize = 0;
+                if (matches.length === 3) prize = 50;
+                else if (matches.length === 4) prize = 150;
+                else if (matches.length === 5) prize = 600;
+                return prize;
+            }
+
+            function updateBalanceInDatabase(amount) {
+                fetch('/update-balance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        message.textContent = "Error updating balance.";
+                    }
+                });
+            }
+
+            const profileDropdownToggle = document.getElementById('profileDropdownToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const arrowIcon = document.getElementById('arrowIcon');
+
+            profileDropdownToggle.addEventListener('click', function() {
+                profileDropdown.classList.toggle('hidden');
+                arrowIcon.classList.toggle('rotate-180');
+            });
+        });
+    </script>
+</head>
+<body class="bg-gray-800 text-white">
+    <header class="h-[60px] w-full flex items-center">
+        <div class="flex-1 h-full flex items-center justify-start m-6">
+            <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
+        </div>
+        <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
+            <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
+                <img src="https://via.placeholder.com/40" alt="Profile picture" class="rounded-full w-10 h-10">
+                <p class="text-sm"><%= username %></p>
+                <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+            <nav id="profileDropdown" class="absolute top-full right-0 mt-2 w-40 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-200 hidden">
+                <a href="/home" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <span>Home</span>
+                </a>
+                <a href="/profile" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <span>View Profile</span>
+                </a>
+                <a href="/" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-b-lg">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+    <main class="p-6">
+        <h1 class="text-3xl text-center mb-4">Welcome to the <span class="text-red-600">Shan</span>kura Guessing Game</h1>
+        <p class="text-center mb-4">Your current balance: <span id="balance">R<%= balance %></span></p>
+        <section class="mb-6">
+            <div class="my-6">
+                <h2 class="text-xl text-center">Advertisements</h2>
+                <div class="bg-gray-700 h-32 flex items-center justify-center">
+                    <p class="text-gray-400">Ad space - your ad here!</p>
+                </div>
+            </div>
+            <h2 class="text-xl mb-2">How to Play ??</h2>
+            <p>Enter 5 unique numbers between 1 and 59 to participate. Each ticket costs R3.00, and you could win exciting prizes!</p>
+        </section>
+        <form id="lottoForm" class="mb-4 text-center">
+            <label for="num1" class="block mb-2">Enter your numbers:</label>
+            <div class="grid grid-cols-5 gap-2 mb-2 justify-center">
+                <input type="number" class="number-input p-2 rounded text-black" min="1" max="59" required>
+                <input type="number" class="number-input p-2 rounded text-black" min="1" max="59" required>
+                <input type="number" class="number-input p-2 rounded text-black" min="1" max="59" required>
+                <input type="number" class="number-input p-2 rounded text-black" min="1" max="59" required>
+                <input type="number" class="number-input p-2 rounded text-black" min="1" max="59" required>
+            </div>
+            <button type="submit" class="bg-red-600 text-white p-2 rounded-lg text-xl mt-4">Play Now</button>
+        </form>
+        <p id="message" class="text-red-600 text-center"></p>
+        <div class="my-6">
+            <h2 class="text-xl text-center">Advertisements</h2>
+            <div class="bg-gray-700 h-32 flex items-center justify-center">
+                <p class="text-gray-400">Ad space - your ad here!</p>
+            </div>
+        </div>
+        <p class="text-center"><a href="/home" class="text-blue-400">Back to Home</a></p>
+    </main>
+</body>
+</html>

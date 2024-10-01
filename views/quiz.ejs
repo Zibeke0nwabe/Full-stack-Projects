@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shankura Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a1a1a; /* Dark background */
+            color: #ffffff; /* White text */
+        }
+        .button {
+            background-color: #ff4757; /* Red button */
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .button:hover {
+            background-color: #e84118; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body class="p-6">
+    <header class="h-[60px] w-full flex items-center">
+        <div class="flex-1 h-full flex items-center justify-start m-6 shadow-lg">
+            <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
+        </div>
+        <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
+            <!-- Profile section with dropdown toggle -->
+            <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
+                <img src="https://via.placeholder.com/40" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
+                <p class="text-sm"><%= username %></p>
+                <!-- Arrow indicator for dropdown -->
+                <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+            <!-- Dropdown menu (hidden by default) -->
+            <nav id="profileDropdown" class="absolute top-full right-0 mt-2 w-40 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-200 hidden">
+                <a href="/home" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="/profile" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
+                    </svg>
+                    <span>View Profile</span>
+                </a>
+                <a href="/" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-b-lg">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <h2 class="text-2xl mb-4 text-center"><%= question.question %></h2>
+        <form id="quiz-form" class="mb-4">
+            <% question.options.forEach(option => { %>
+                <div class="mb-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="answer" value="<%= option %>" class="mr-2"> <%= option %>
+                    </label>
+                </div>
+            <% }); %>
+            <div class="text-center">
+                <button type="submit" class="button">Next</button>
+            </div>
+        </form>
+        <div class="text-center">
+            <a href="/home" class="text-blue-400">Quit</a>
+        </div>
+        <div id="ads" class="mt-6 text-center hidden">
+            <h3 class="text-xl">Watch this ad!</h3>
+            <iframe width="320" height="240" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            <div class="mt-2">
+                <button id="skip-ad" class="button">Skip Ad</button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const form = document.getElementById('quiz-form');
+        const adsDiv = document.getElementById('ads');
+        const skipButton = document.getElementById('skip-ad');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/quiz/answer', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.nextQuestion) {
+                    adsDiv.classList.remove('hidden'); // Show ads
+                } else {
+                    alert('Quiz completed!');
+                }
+            });
+        });
+
+        skipButton.addEventListener('click', function() {
+            adsDiv.classList.add('hidden');
+
+            fetch('/quiz/skip-ad', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.nextQuestion) {
+                    window.location.reload(); // Reloads to fetch the next question
+                } else {
+                    alert('Quiz completed!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

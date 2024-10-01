@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Ads</title>
+</head>
+<body>
+    <h1>Available Video Ads</h1>
+    <ul>
+        <% ads.forEach(ad => { %>
+            <li>
+                <%= ad.title %>
+                <form action="/video-ads/complete/<%= ad._id %>" method="POST">
+                    <button type="submit">Complete Video</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+    <p><a href="/home">Back to Home</a></p>
+</body>
+</html>

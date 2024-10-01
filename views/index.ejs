@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shankura Splash Screen</title>
+  <script>
+    // Redirect to /login after 8 seconds
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 6000);
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+  </style>
+</head>
+
+<body class="bg-black h-screen flex items-center justify-center">
+  <div class="flex flex-col items-center justify-center space-y-6">
+    <!-- App Logo and Name -->
+    <div class="text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-poppins">
+        <span class="text-red-600">Shan</span><span class="text-white">kura</span>
+      </h1>
+      <p class="text-md md:text-base lg:text-lg text-white">The most popular way to make money online!</p>
+    </div>
+
+    <!-- Decorative curved lines -->
+    <div class="relative mt-10 w-full h-full">
+      <div class="absolute w-40 h-40 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-full border-4 border-red-600 opacity-40 top-0 left-0 transform translate-x-10 -translate-y-10"></div>
+      <div class="absolute w-20 h-20 md:w-40 md:h-40 lg:w-52 lg:h-52 rounded-full border-4 border-red-600 opacity-30 bottom-10 right-10 transform translate-x-8"></div>
+    </div>
+  </div>
+</body>
+
+</html>
