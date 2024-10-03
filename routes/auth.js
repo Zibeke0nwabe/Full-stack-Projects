@@ -38,6 +38,8 @@ router.post('/login', async (req, res) => {
 
     req.session.username = user.username;
     req.session.balance = user.balance;
+    req.session.pendingBalance = user.pendingBalance;
+    req.session.email = user.email;
 
     res.redirect('/home');
   } catch (error) {
@@ -78,7 +80,7 @@ router.post('/register', async (req, res) => {
     if (referralCode) {
       const referrer = await User.findOne({ referralCode });
       if (referrer) {
-        referrer.pandingBalance = (referrer.pandingBalance || 0) + 5; // Add R5 to referrer's pending balance
+        referrer.pendingBalance = referrer.pendingBalance + 3; // Add R3 to referrer's pending balance
         await referrer.save();
 
         await sendReferralNotification(referrer.email, username);
@@ -88,7 +90,7 @@ router.post('/register', async (req, res) => {
     await user.save();
     await sendVerificationEmail(email, user.verificationCode);
     req.session.email = email; // Store email in session
-    res.render('register-verify', { email, errorMessage: '' });
+    res.render('register-verify', { email, errorMessage: '', successMessage: 'Registration successful! You have been credited R5.' });
   } catch (error) {
     console.error('Registration error:', error);
     res.render('register', { errorMessage: 'Error registering user' });
@@ -252,7 +254,7 @@ async function sendReferralNotification(referrerEmail, username) {
     from: process.env.EMAIL_USER,
     to: referrerEmail,
     subject: 'New User Registered with Your Referral Code',
-    text: `A new user, ${username}, has registered using your referral code. R5 has been added to your pending balance!`
+    text: `A new user, ${username}, has registered using your referral code. R3 has been added to your pending balance!`
   };
 
   await transporter.sendMail(mailOptions);

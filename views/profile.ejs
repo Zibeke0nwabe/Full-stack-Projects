@@ -49,8 +49,8 @@
         <!-- User Info Section -->
         <section class="w-11/12 md:w-2/3 p-6">
             <div class="space-y-4 text-center">
-                <div class="text-lg font-semibold">Username: Zibeke</div>
-                <div class="text-sm text-gray-400">Email: zibeke@gmail.com</div>
+                <div class="text-lg font-semibold">Username: <%= username %></div>
+                <div class="text-sm text-gray-400">Email: <%= email %></div>
             </div>
         </section>
 
@@ -58,7 +58,7 @@
         <section class="w-11/12 md:w-2/3 p-6 flex space-x-4 justify-center">
             <div class="flex-1 bg-gray-800 text-center p-4 rounded-lg">
                 <span class="block text-lg font-semibold">Balance</span>
-                <span class="block text-2xl font-bold text-red-600">R500</span>
+                <span class="block text-2xl font-bold text-red-600"><%= balance%>.00</span>
             </div>
             <div class="flex-1 bg-gray-800 text-center p-4 rounded-lg">
                 <span class="block text-lg font-semibold">Back Home</span>

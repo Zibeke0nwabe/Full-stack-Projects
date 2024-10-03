@@ -42,7 +42,8 @@ const isAuthenticated = (req, res, next) => {
 
 // Protected routes
 app.get('/home', isAuthenticated, (req, res) => {
-  res.render('home', { username: req.session.username, balance: req.session.balance });
+  console.log(req.session);
+  res.render('home', { username: req.session.username, balance: req.session.balance, pendingBalance: req.session.pendingBalance });
 });
 
 app.get('/profile', isAuthenticated, (req, res) => {
