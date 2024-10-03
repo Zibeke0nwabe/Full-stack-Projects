@@ -1,3 +1,4 @@
+
 require('dotenv').config(); // Load environment variables
 const express = require('express');
 const session = require('express-session');
@@ -43,7 +44,6 @@ const isAuthenticated = (req, res, next) => {
 
 // Protected routes
 app.get('/home', isAuthenticated, (req, res) => {
-  console.log(req.session);
   res.render('home', { username: req.session.username, balance: req.session.balance, pendingBalance: req.session.pendingBalance });
 });
 
