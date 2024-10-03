@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shankura - Home</title>
+    <title>Shankura - Video Ads</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .rotate-180 {
@@ -17,42 +17,48 @@
             <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
         </div>
         <div class="w-[300px] h-full flex justify-center relative">
-            <!-- Profile section with dropdown toggle -->
             <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
-                <img src="https://via.placeholder.com/40" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
+                <img src="https://th.bing.com/th/id/R.19fa7497013a87bd77f7adb96beaf768?rik=144XvMigWWj2bw&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-PNG-High-Quality-Image.png&ehk=%2bat%2brmqQuJrWL609bAlrUPYgzj%2b%2f7L1ErXRTN6ZyxR0%3d&risl=&pid=ImgRaw&r=0" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
                 <p class="text-sm"><%= username %></p>
-                <!-- Arrow indicator for dropdown -->
                 <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
-            <!-- Dropdown menu (hidden by default) -->
             <nav id="profileDropdown" class="absolute top-full right-0 mt-2 w-40 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-200 hidden">
                 <a href="/home" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
-                    </svg>
                     <span>Home</span>
                 </a>
                 <a href="/profile" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
-                    </svg>
                     <span>View Profile</span>
                 </a>
                 <a href="/" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-b-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
-                    </svg>
                     <span>Logout</span>
                 </a>
             </nav>
         </div>
     </header>
+
     <h1 class="mt-8 text-5xl">Videos from ads will be displayed here</h1>
-</body>
-<script>
-    // Dropdown toggle functionality
+
+    <!-- Section for displaying Google Ads -->
+    <div id="adContainer" class="mt-8">
+        <div id="googleAdsPlaceholder">
+            <!-- Insert Google Ads code here -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5605794258432532"
+            crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-5605794258432532"
+            data-ad-slot="9266258800"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+        </div>
+    </div>
+
+    <script>
+            // Dropdown toggle functionality
     const profileDropdownToggle = document.getElementById('profileDropdownToggle');
     const profileDropdown = document.getElementById('profileDropdown');
     const arrowIcon = document.getElementById('arrowIcon');
@@ -61,5 +67,40 @@
         profileDropdown.classList.toggle('hidden');
         arrowIcon.classList.toggle('rotate-180');
     });
-</script>
+        // Simulating ad view and updating balance
+        const revenuePerAd = 100; // Simulated revenue from ad
+        const email = '<%= email %>'; // Get user ID by Email from session
+
+        const updateUserBalance = async (amount) => {
+            try {
+                const response = await fetch(`/api/users/${email}/update-balance`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update balance');
+                }
+                
+                const updatedUser = await response.json();
+                console.log('Updated balance:', updatedUser.balance);
+            } catch (error) {
+                console.error('Error updating balance:', error);
+            }
+        };
+
+        const adWatched = () => {
+            // Simulate watching an ad
+            console.log('Ad watched!');
+            const earnings = revenuePerAd * 0.05; // Calculate 5% of the revenue
+            updateUserBalance(earnings);
+        };
+
+        // Simulate ad watched when the user interacts with the ad
+        document.getElementById('googleAdsPlaceholder').addEventListener('click', adWatched);
+    </script>
+</body>
 </html>

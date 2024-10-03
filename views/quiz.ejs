@@ -25,15 +25,15 @@
         }
     </style>
 </head>
-<body class="p-6">
+<body class="p-6 bg-gray-800">
     <header class="h-[60px] w-full flex items-center">
-        <div class="flex-1 h-full flex items-center justify-start m-6 shadow-lg">
+        <div class="flex-1 h-full flex items-center justify-start m-6">
             <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
         </div>
-        <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
+        <div class="w-[300px] h-full flex justify-center relative">
             <!-- Profile section with dropdown toggle -->
             <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
-                <img src="https://via.placeholder.com/40" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
+                <img src="https://th.bing.com/th/id/R.19fa7497013a87bd77f7adb96beaf768?rik=144XvMigWWj2bw&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-PNG-High-Quality-Image.png&ehk=%2bat%2brmqQuJrWL609bAlrUPYgzj%2b%2f7L1ErXRTN6ZyxR0%3d&risl=&pid=ImgRaw&r=0" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
                 <p class="text-sm"><%= username %></p>
                 <!-- Arrow indicator for dropdown -->
                 <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -63,8 +63,10 @@
             </nav>
         </div>
     </header>
-    <main>
-        <h2 class="text-2xl mb-4 text-center"><%= question.question %></h2>
+    
+    <main class="mt-8">
+
+        <h2 class="text-3xl text-center mb-4"><%= question.question %></h2>
         <form id="quiz-form" class="mb-4">
             <% question.options.forEach(option => { %>
                 <div class="mb-2">
@@ -80,19 +82,46 @@
         <div class="text-center">
             <a href="/home" class="text-blue-400">Quit</a>
         </div>
+        
         <div id="ads" class="mt-6 text-center hidden">
-            <h3 class="text-xl">Watch this ad!</h3>
-            <iframe width="320" height="240" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allowfullscreen></iframe>
-            <div class="mt-2">
-                <button id="skip-ad" class="button">Skip Ad</button>
+            <h3 class="text-xl mb-4">Watch this ad!</h3>
+            <div id="adContainerAbove" class="mb-4">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="autorelaxed"
+                     data-ad-client="ca-pub-5605794258432532"
+                     data-ad-slot="9266258800"></ins>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5605794258432532"
+                        crossorigin="anonymous"></script>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <div id="adContainerBelow" class="mb-4">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="autorelaxed"
+                     data-ad-client="ca-pub-5605794258432532"
+                     data-ad-slot="9266258800"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
         </div>
     </main>
     
     <script>
+        // Dropdown toggle functionality
+        const profileDropdownToggle = document.getElementById('profileDropdownToggle');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const arrowIcon = document.getElementById('arrowIcon');
+
+        profileDropdownToggle.addEventListener('click', function() {
+            profileDropdown.classList.toggle('hidden');
+            arrowIcon.classList.toggle('rotate-180');
+        });
         const form = document.getElementById('quiz-form');
         const adsDiv = document.getElementById('ads');
-        const skipButton = document.getElementById('skip-ad');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -106,28 +135,37 @@
             .then(data => {
                 if (data.nextQuestion) {
                     adsDiv.classList.remove('hidden'); // Show ads
+                    showAds(); // Function to handle ad display
                 } else {
                     alert('Quiz completed!');
                 }
             });
         });
 
-        skipButton.addEventListener('click', function() {
-            adsDiv.classList.add('hidden');
+        function showAds() {
+            // Display ads logic here
+            document.getElementById('adContainerAbove').style.display = 'block';
+            document.getElementById('adContainerBelow').style.display = 'block';
 
-            fetch('/quiz/skip-ad', {
+            setTimeout(() => {
+                // Logic to hide ads and proceed to the next question
+                document.getElementById('adContainerAbove').style.display = 'none';
+                document.getElementById('adContainerBelow').style.display = 'none';
+                loadNextQuestion(); // Function to load the next question and update balance
+            }, 90000); // Display ads for 90 seconds total
+        }
+
+        function loadNextQuestion() {
+            fetch('/quiz/update-balance', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: 1 }) // Add R 1
             })
             .then(response => response.json())
             .then(data => {
-                if (data.nextQuestion) {
-                    window.location.reload(); // Reloads to fetch the next question
-                } else {
-                    alert('Quiz completed!');
-                }
+                window.location.reload(); // Reloads to fetch the next question
             });
-        });
+        }
     </script>
 </body>
 </html>

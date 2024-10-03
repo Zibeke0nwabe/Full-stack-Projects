@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Shankura</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-800 text-white">
+    <header class="h-[60px] w-full flex items-center">
+        <div class="flex-1 h-full flex items-center justify-start m-6">
+            <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
+        </div>
+        <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
+            <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
+                <img src="https://th.bing.com/th/id/R.19fa7497013a87bd77f7adb96beaf768?rik=144XvMigWWj2bw&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-PNG-High-Quality-Image.png&ehk=%2bat%2brmqQuJrWL609bAlrUPYgzj%2b%2f7L1ErXRTN6ZyxR0%3d&risl=&pid=ImgRaw&r=0" alt="Profile picture" class="rounded-full w-10 h-10">
+                <p class="text-sm"><%= username %></p>
+                <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+            <nav id="profileDropdown" class="absolute top-full right-0 mt-2 w-40 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-200 hidden">
+                <a href="/home" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <span>Home</span>
+                </a>
+                <a href="/profile" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
+                    <span>View Profile</span>
+                </a>
+                <a href="/" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-b-lg">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+    <main class="p-6">
+        <h1 class="text-3xl text-center mb-12">About <span class="text-red-600">Shan</span><span class="text-white">kura</span></h1>
+        <p class="mb-4">Welcome to Shankura, your trusted platform for entertainment and earning opportunities! We provide various ways for users to make money while enjoying engaging games and activities.</p>
+
+        <h2 class="text-xl mt-6">How You Can Make Money</h2>
+        <p class="mb-4">At Shankura, you can earn money through different channels:</p>
+        
+        <h3 class="text-lg mt-4">1. Video Section</h3>
+        <p>Watch informative and entertaining videos to earn rewards. Our video section is designed to help you gain insights while accumulating points that can be converted into cash. Each video you watch contributes to your earnings!</p>
+
+        <h3 class="text-lg mt-4">2. Random Number Guessing Game</h3>
+        <p>Participate in our exciting Random Number Guessing game. Enter your chosen numbers for a chance to win prizes. Each ticket costs R3.00, and the more numbers you match, the higher your winnings!</p>
+
+        <h3 class="text-lg mt-4">3. Quiz</h3>
+        <p>Test your knowledge with our quizzes. Answer correctly to earn points that can increase your balance. The quizzes cover various topics, making them both fun and educational.</p>
+
+        <h2 class="text-xl mt-6">Withdrawal Information</h2>
+        <p class="mb-4">You can only withdraw your earnings once you reach a minimum balance of R1000. This ensures that our users have a rewarding experience and encourages consistent engagement with our platform.</p>
+
+        <h2 class="text-xl mt-6">Why Trust Us?</h2>
+        <p class="mb-4">Shankura is built on transparency and user satisfaction. We prioritize your security and privacy, ensuring that all transactions are safe. Our platform is designed to provide a fun and rewarding experience while giving you the chance to earn money.</p>
+        <p>With our reliable customer support, you can always reach out to us with any questions or concerns. We are dedicated to maintaining a positive environment where users feel valued and empowered.</p>
+
+        <h2 class="text-xl mt-6">Join Us Today!</h2>
+        <p class="mb-4">Don't miss out on the fun and earning potential! Join the Shankura community today and start making money while enjoying our engaging games and content.</p>
+
+        <p class="text-center mt-6"><a href="/home" class="text-blue-400">Back to Home</a></p>
+    </main>
+</body>
+<script>
+    // Dropdown toggle functionality
+    const profileDropdownToggle = document.getElementById('profileDropdownToggle');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const arrowIcon = document.getElementById('arrowIcon');
+
+    profileDropdownToggle.addEventListener('click', function() {
+        profileDropdown.classList.toggle('hidden');
+        arrowIcon.classList.toggle('rotate-180');
+    });
+</script>
+</html>

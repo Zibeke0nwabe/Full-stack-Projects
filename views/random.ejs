@@ -24,7 +24,7 @@
                 e.preventDefault();
 
                 if (balance < ticketPrice) {
-                    message.textContent = "Insufficient funds. Please go watch ads or quiz to make  more money to play.";
+                    message.textContent = "Insufficient funds. Please go watch ads or quiz to make more money to play.";
                     return;
                 }
 
@@ -106,7 +106,7 @@
         </div>
         <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
             <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
-                <img src="https://via.placeholder.com/40" alt="Profile picture" class="rounded-full w-10 h-10">
+                <img src="https://th.bing.com/th/id/R.19fa7497013a87bd77f7adb96beaf768?rik=144XvMigWWj2bw&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-PNG-High-Quality-Image.png&ehk=%2bat%2brmqQuJrWL609bAlrUPYgzj%2b%2f7L1ErXRTN6ZyxR0%3d&risl=&pid=ImgRaw&r=0" alt="Profile picture" class="rounded-full w-10 h-10">
                 <p class="text-sm"><%= username %></p>
                 <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -132,7 +132,16 @@
             <div class="my-6">
                 <h2 class="text-xl text-center">Advertisements</h2>
                 <div class="bg-gray-700 h-32 flex items-center justify-center">
-                    <p class="text-gray-400">Ad space - your ad here!</p>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-format="autorelaxed"
+                         data-ad-client="ca-pub-5605794258432532"
+                         data-ad-slot="9266258800"></ins>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5605794258432532"
+                            crossorigin="anonymous"></script>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                 </div>
             </div>
             <h2 class="text-xl mb-2">How to Play ??</h2>
@@ -153,7 +162,14 @@
         <div class="my-6">
             <h2 class="text-xl text-center">Advertisements</h2>
             <div class="bg-gray-700 h-32 flex items-center justify-center">
-                <p class="text-gray-400">Ad space - your ad here!</p>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="autorelaxed"
+                     data-ad-client="ca-pub-5605794258432532"
+                     data-ad-slot="9266258800"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
         </div>
         <p class="text-center"><a href="/home" class="text-blue-400">Back to Home</a></p>

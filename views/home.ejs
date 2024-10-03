@@ -13,43 +13,30 @@
 </head>
 <body class="bg-black text-white">
     <header class="h-[60px] w-full flex items-center">
-        <div class="flex-1 h-full flex items-center justify-start m-6 shadow-lg">
+        <div class="flex-1 h-full flex items-center justify-start m-6">
             <p class="text-2xl font-bold"><span class="text-red-600">Shan</span><span class="text-white">kura</span></p>
         </div>
-        <div class="w-[300px] h-full flex justify-center relative">
-            <!-- Profile section with dropdown toggle -->
+        <div class="w-[300px] h-full flex items-center justify-center m-6 relative">
             <div class="flex items-center cursor-pointer space-x-2" id="profileDropdownToggle">
-                <img src="https://via.placeholder.com/40" alt="Profile picture of <%= username %>" class="rounded-full w-10 h-10">
+                <img src="https://th.bing.com/th/id/R.19fa7497013a87bd77f7adb96beaf768?rik=144XvMigWWj2bw&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-PNG-High-Quality-Image.png&ehk=%2bat%2brmqQuJrWL609bAlrUPYgzj%2b%2f7L1ErXRTN6ZyxR0%3d&risl=&pid=ImgRaw&r=0" alt="Profile picture" class="rounded-full w-10 h-10">
                 <p class="text-sm"><%= username %></p>
-                <!-- Arrow indicator for dropdown -->
                 <svg id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
-            <!-- Dropdown menu (hidden by default) -->
             <nav id="profileDropdown" class="absolute top-full right-0 mt-2 w-40 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-200 hidden">
                 <a href="/home" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
-                    </svg>
                     <span>Home</span>
                 </a>
                 <a href="/profile" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-t-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A3.375 3.375 0 008 20.25h8a3.375 3.375 0 002.879-2.446M15.75 11.625A3.75 3.75 0 1112 7.875a3.75 3.75 0 013.75 3.75zm0 0V20.25"></path>
-                    </svg>
                     <span>View Profile</span>
                 </a>
                 <a href="/" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-b-lg">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 0a6 6 0 11-12 0 6 6 0 0112 0z"></path>
-                    </svg>
                     <span>Logout</span>
                 </a>
             </nav>
         </div>
     </header>
-
     <main class="flex-1 w-full">
         <!-- Balance Section with Withdraw Button -->
         <section class="rounded-lg bg-gray-800 h-48 flex items-center justify-between m-6 p-6">
@@ -68,13 +55,13 @@
             <div class="bg-gray-800 h-20 sm:h-24 flex items-center justify-center m-2 mr-6 ml-6 rounded-lg text-base sm:text-lg">
                 <div class="text-center">
                     <p>R10.00</p>
-                    <small class="text-gray-400">Total quiz earning</small>
+                    <small class="text-gray-400">Total Quiz earning</small>
                 </div>
             </div>
             <div class="bg-gray-800 h-20 sm:h-24 flex items-center justify-center m-2 mr-6 ml-6 rounded-lg text-base sm:text-lg">
                 <div class="text-center">
-                    <p>R10.00</p>
-                    <small class="text-gray-400">Total ads earning</small>
+                    <p>R100.00</p>
+                    <small class="text-gray-400">Total Ads earning</small>
                 </div>
             </div>
             <div class="bg-gray-800 h-20 sm:h-24 flex items-center justify-center m-2 mr-6 ml-6 rounded-lg text-base sm:text-lg">
@@ -85,7 +72,7 @@
             </div>
             <div class="bg-gray-800 h-20 sm:h-24 flex items-center justify-center m-2 mr-6 ml-6 rounded-lg text-base sm:text-lg">
                 <div class="text-center">
-                    <p class="text-red-600 font-bold"><%= pendingBalance %></p>
+                    <p><%= pendingBalance %></p>
                     <small class="text-gray-400">Your Panding Balance</small>
                 </div>
             </div>
@@ -128,10 +115,10 @@
             <div class="bg-gray-800 h-28 sm:h-32 flex items-center justify-between m-2 p-4 rounded-lg">
                 <div class="flex-1">
                     <h2 class="text-lg font-bold">Learn about us</h2>
-                    <p class="text-sm text-gray-400">Play the quiz game and earn R1000 a day, no limit. Keep playing and earn more money.</p>
+                    <p class="text-sm text-gray-400">Learn more about us and how we can help you make money online, it is fast easy and we are not a scam trust us we no better</p>
                 </div>
                 <div class="w-[80px] flex items-center justify-end">
-                    <a href="/quiz" class="text-sm sm:text-base bg-red-600 text-white px-4 py-1 rounded-lg">Play</a>
+                    <a href="/lesson" class="text-sm sm:text-base bg-red-600 text-white px-4 py-1 rounded-lg">Play</a>
                 </div>
             </div>
         </section>
