@@ -13,7 +13,7 @@
     </style>
 </head>
 <body class="bg-black text-white">
-    <nav class="pl-4 pr-4">
+    <nav class="">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -29,14 +29,15 @@
                             </svg>
                         </div>
                     </button>
+                    <p><span class='text-red-600'>Shan</span>kura</p>
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex flex-shrink-0 items-center">
                         <p class="lg:text-4xl font-bold hidden sm:block"><span class='text-red-600'>Shan</span>kura</p>
                         <div class="hidden sm:flex space-x-4 ml-4">
-                            <a href="/home" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="/profile" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
-                            <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+                            <a href="/home" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3  rounded-md text-sm font-medium">Home</a>
+                            <a href="/profile" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 rounded-md text-sm font-medium">Profile</a>
+                            <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 rounded-md text-sm font-medium">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -82,15 +83,17 @@
     </div>
 
     <script>
-            // Dropdown toggle functionality
-    const profileDropdownToggle = document.getElementById('profileDropdownToggle');
-    const profileDropdown = document.getElementById('profileDropdown');
-    const arrowIcon = document.getElementById('arrowIcon');
+        // Menu toggle functionality
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
 
-    profileDropdownToggle.addEventListener('click', function() {
-        profileDropdown.classList.toggle('hidden');
-        arrowIcon.classList.toggle('rotate-180');
-    });
+        menuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
         // Simulating ad view and updating balance
         const revenuePerAd = 100; // Simulated revenue from ad
         const email = '<%= email %>'; // Get user ID by Email from session
